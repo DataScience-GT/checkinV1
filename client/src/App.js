@@ -1,10 +1,12 @@
 import './App.css';
 import { useState } from 'react';
 
+console.log(process.env.REACT_APP_CHECKIN_API_KEY);
+
 function App() {
   const [test, setTest] = useState(null);
   const getTest = () => {
-    fetch('/api/eventcheckin/test1/test2')
+    fetch(`/api/${process.env.REACT_APP_CHECKIN_API_KEY}/event/list`)
       .then(result => result.json())
       .then(body => setTest(body));
   };
