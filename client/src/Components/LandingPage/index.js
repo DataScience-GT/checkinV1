@@ -1,11 +1,17 @@
+import './main.css';
+
 //import components
 import PageHeader from "../PageHeader";
+import Wrapper from "../Wrapper";
 
 const LandingPage = () => {
+    //get a list of elements
+    //use effect/usestate
+
     return (
-        <div id="wrapper">
+        <Wrapper>
             <PageHeader title="Events" />
-        </div>
+        </Wrapper>
     );
 };
 
