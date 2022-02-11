@@ -1,0 +1,9 @@
+.list {
+  display: table;
+  position: relative;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 1px dashed red;
+}
+/*# sourceMappingURL=main.css.map */

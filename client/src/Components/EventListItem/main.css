@@ -1,0 +1,19 @@
+.event-list-item {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.event-list-item:first-child {
+  font-weight: 600;
+}
+
+.event-list-item:first-child > td {
+  border: 1px solid #000;
+}
+
+td {
+  display: table-cell;
+  padding: 5px;
+}
+/*# sourceMappingURL=main.css.map */

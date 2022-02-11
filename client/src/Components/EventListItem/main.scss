@@ -1,0 +1,15 @@
+.event-list-item {
+    width: fit-content;
+    &:first-child {
+        font-weight: 600;
+        > td {
+            border: 1px solid #000;
+        }
+    }
+}
+
+td {
+    display: table-cell;
+    padding: 5px;
+    //border: 1px dashed blue;
+}
