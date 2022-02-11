@@ -1,8 +1,8 @@
 .list {
-    display: table;
-    //flex-flow: column wrap;
+    display: flex;
+    flex-flow: row wrap;
     position: relative;
-    width: fit-content;
+    width: 100%;
 
-    border:1px dashed red;
+    //border:1px dashed red;
 }

@@ -2,7 +2,7 @@ import './main.css';
 
 const FitContainer = (props) => {
     return (
-        <div class="fit-container">
+        <div className="fit-container">
             {props.children}
         </div>
     );

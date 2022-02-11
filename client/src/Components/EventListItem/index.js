@@ -1,12 +1,18 @@
-import './main.css';
+import "./main.css";
+import { useContext } from "react";
+import ThemeContext from "../ThemeContext";
 
 const EventListItem = (props) => {
-    return (
-        <tr className="event-list-item">
-            <td>{props.name}</td>
-            <td>{props.description}</td>
-        </tr>
-    );
-}
+  const [theme, setTheme] = useContext(ThemeContext);
+
+  return (
+    <div className="event-list-item" style={{borderColor: theme}}>
+      <span className="name" style={{ backgroundColor: theme }}>
+        {props.name}
+      </span>
+      <span className="desc">{props.description}</span>
+    </div>
+  );
+};
 
 export default EventListItem;

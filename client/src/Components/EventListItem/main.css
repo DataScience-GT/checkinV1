@@ -1,15 +1,32 @@
 .event-list-item {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 300px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  border: 1px solid red;
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
-.event-list-item:first-child {
-  font-weight: 600;
+.event-list-item > span {
+  display: block;
+  width: 100%;
+  padding: 10px;
 }
 
-.event-list-item:first-child > td {
-  border: 1px solid #000;
+.event-list-item .name {
+  overflow: hidden;
+  text-align: center;
+  line-clamp: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.event-list-item .desc {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
 }
 
 td {

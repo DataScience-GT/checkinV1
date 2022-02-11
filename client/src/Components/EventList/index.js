@@ -1,11 +1,41 @@
-import './main.css';
+import "./main.css";
+import { Component } from "react";
 
-const EventList = (props) => {
-    return (
-        <table className="list">
-            {props.children}
-        </table>
+import EventListItem from "../EventListItem";
+
+class EventList extends Component {
+  constructor() {
+    super();
+    this.state = { loading: true, events: [] };
+  }
+  async componentDidMount() {
+    //process.env.REACT_APP_CHECKIN_API_KEY
+    const res = await fetch(
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_CHECKIN_API_KEY}/event/list`
     );
+    const json = await res.json();
+    this.setState({ loading: false, events: json.data });
+  }
+  render() {
+    if (this.state.loading) {
+      return (
+        <div className="list">
+          <h2>loading events...</h2>
+        </div>
+      );
+    }
+    return (
+      <div className="list">
+        {Object.keys(this.state.events).map((key) => (
+          <EventListItem
+            key={key}
+            name={this.state.events[key].name}
+            description={this.state.events[key].description}
+          />
+        ))}
+      </div>
+    );
+  }
 }
 
 export default EventList;

@@ -1,10 +1,30 @@
 .event-list-item {
-    width: fit-content;
-    &:first-child {
-        font-weight: 600;
-        > td {
-            border: 1px solid #000;
-        }
+    width: 300px;
+    height: fit-content;
+    border: 1px solid;
+    margin: 10px;
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    > span {
+        display: block;
+        width: 100%;
+        padding: 10px;
+    }
+    .name {
+        overflow: hidden;
+        text-align: center;
+        line-clamp: 1;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+        
+    }
+    .desc {
+        overflow: hidden;
+        text-align: left;
+        text-overflow: ellipsis;
     }
 }
 
