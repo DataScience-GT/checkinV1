@@ -1,0 +1,22 @@
+header {
+    height: calc(5em + 10px);
+    display: flex;
+    position: relative;
+    width: 100%;
+    //border: 1px dashed red;
+    background-color: rgb(158, 157, 231);
+    box-shadow: inset 0px 0px 0px 5px rgb(104, 104, 104);
+    padding: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    flex-flow: row wrap;
+
+    h1 {
+        display: flexbox;
+        width: fit-content;
+        height: 100%;
+        //border: 1px dashed green;
+        padding: 0.25em 0px;
+        margin: 0 auto;
+        font-size: 2.5em;
+    }
+}

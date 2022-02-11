@@ -1,20 +1,23 @@
-import './App.css';
-import { useState } from 'react';
+import { React, useEffect } from "react";
+import { ReactDOM } from "react-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
-console.log(process.env.REACT_APP_CHECKIN_API_KEY);
+//load pages
+import LandingPage from './Components/LandingPage'
+//load components
+import PageHeader from "./Components/PageHeader";
+
+//console.log(process.env.REACT_APP_CHECKIN_API_KEY);
 
 function App() {
-  const [test, setTest] = useState(null);
-  const getTest = () => {
-    fetch(`/api/${process.env.REACT_APP_CHECKIN_API_KEY}/event/list`)
-      .then(result => result.json())
-      .then(body => setTest(body));
-  };
   return (
-    <div className="app">
-      <h1>Word Associations Map</h1>
-      <button onClick={getTest}>Find Associations</button>
-      {test ? <span>{test.toString()}</span> : <p>no results</p>}
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
