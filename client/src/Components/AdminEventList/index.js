@@ -14,6 +14,9 @@ class AdminEventList extends Component {
       `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/list`
     );
     const json = await res.json();
+    if (json.error) {
+      console.error(json.error);
+    }
     this.setState({ events: json.data });
 
     // get event/status of each event
@@ -24,6 +27,9 @@ class AdminEventList extends Component {
         `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/status?eventIdentifier=${element.identifier}`
       );
       const json2 = await res2.json();
+      if (json2.error) {
+        console.error(json2.error);
+      }
       statusData.push(json2.data);
     }
     //console.log(statusData)
@@ -41,6 +47,7 @@ class AdminEventList extends Component {
       <table className="admin-list">
         <thead>
           <tr>
+            <th>edit</th>
             <th>Name</th>
             <th>Description</th>
             <th>Status</th>
