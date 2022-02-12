@@ -1,0 +1,16 @@
+.title-container {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: relative;
+  display: block;
+}
+
+.title-container .container-title {
+  background-color: #eb6d6d;
+  padding: 10px;
+  -webkit-box-shadow: inset 0px 0px 0px 5px #686868;
+          box-shadow: inset 0px 0px 0px 5px #686868;
+}
+/*# sourceMappingURL=main.css.map */

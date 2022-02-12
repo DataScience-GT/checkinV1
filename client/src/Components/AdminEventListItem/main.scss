@@ -1,4 +1,11 @@
-.event-list-item {
+.admin-event-list-item {
+  > td {
+    border: 1px dashed blue;
+    color:#000;
+  }
+}
+
+/*.event-list-item {
     width: 300px;
     height: fit-content;
     border: 1px solid;
@@ -64,4 +71,4 @@ td {
     display: table-cell;
     padding: 5px;
     //border: 1px dashed blue;
-}
+}*/

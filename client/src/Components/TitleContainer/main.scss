@@ -1,0 +1,13 @@
+.title-container {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    display: block;
+
+    //border: 1px dashed blue;
+    .container-title {
+        background-color: rgb(235, 109, 109);
+        padding: 10px;
+        box-shadow: inset 0px 0px 0px 5px rgb(104, 104, 104);
+    }
+}

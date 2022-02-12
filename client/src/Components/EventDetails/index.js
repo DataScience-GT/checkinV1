@@ -3,13 +3,15 @@ import { Component } from "react";
 
 import EventListItem from "../EventListItem";
 
-class EventList extends Component {
+class EventDetails extends Component {
   constructor() {
     super();
     this.state = { loading: true, events: [] };
   }
+  
   async componentDidMount() {
     //process.env.REACT_APP_CHECKIN_API_KEY
+    //load all events
     const res = await fetch(
       `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_DEFAULT_API_KEY}/event/list`
     );
@@ -32,7 +34,6 @@ class EventList extends Component {
             name={this.state.events[key].name}
             description={this.state.events[key].description}
             identifier={this.state.events[key].identifier}
-            status={this.state.events[key].status}
           />
         ))}
       </div>
@@ -40,4 +41,4 @@ class EventList extends Component {
   }
 }
 
-export default EventList;
+export default EventDetails;
