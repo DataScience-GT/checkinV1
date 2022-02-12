@@ -616,6 +616,56 @@ app.post("/api/:key/event/status", async (req, res) => {
 });
 
 /**
+ * @return whether user is checked in to event
+ */
+app.get("/api/:key/event/checkedin", async (req, res) => {
+  //check for prerequisites
+  let key = req.params.key;
+  try {
+    let result = await checkAPIkey(key, "event.checkedin");
+  } catch (err) {
+    res.status(400).json({ error: err });
+    return;
+  }
+
+  //get body data
+  var errors = [];
+
+  if (!req.body.event) {
+    errors.push("Must include an event");
+  } else {
+    if (!req.body.event.identifier) {
+      errors.push("Event must include an identifier property");
+    }
+  }
+
+  if (!req.body.user) {
+    errors.push("Must include a user");
+  } else {
+    if (!req.body.user.barcode) {
+      errors.push("User must include a barcode property");
+    }
+  }
+  if (errors.length) {
+    res.status(400).json({ error: errors.join(", ") });
+    return;
+  }
+
+  //get whether user is checked in
+  let sql = `SELECT COUNT(*) as count FROM event_${req.body.event.identifier} WHERE barcodeNum = '${req.body.user.barcode}' AND attended = '1';`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+      data: rows,
+    });
+  });
+});
+
+/**
  * @return list of users
  */
 app.get("/api/:key/user/list", async (req, res) => {
