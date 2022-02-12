@@ -11,7 +11,7 @@ const AdminEventListItem = (props) => {
       <td className="name">{props.name}</td>
       <td className="desc">{props.description ? props.description : "N/A"}</td>
       <td className="status">{props.status ? "enabled" : "disabled"}</td>
-      <td className="attended">{props.attended}</td>
+      <td className="attended">{props.attended}/{props.total}</td>
     </tr>
   );
 };

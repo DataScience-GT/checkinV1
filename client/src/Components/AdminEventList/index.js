@@ -6,17 +6,28 @@ import AdminEventListItem from "../AdminEventListItem";
 class AdminEventList extends Component {
   constructor() {
     super();
-    this.state = { loading: true, events: [], attended: -1, total: -1 };
+    this.state = { loading: true, events: [], status: [] };
   }
   async componentDidMount() {
     //process.env.REACT_APP_CHECKIN_API_KEY
     const res = await fetch(
-      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_DEFAULT_API_KEY}/event/list`
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/list`
     );
     const json = await res.json();
     this.setState({ events: json.data });
 
-    // get event/status
+    // get event/status of each event
+    var statusData = [];
+    for (let i = 0; i < this.state.events.length; i++) {
+      const element = this.state.events[i];
+      const res2 = await fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/status?eventIdentifier=${element.identifier}`
+      );
+      const json2 = await res2.json();
+      statusData.push(json2.data);
+    }
+    //console.log(statusData)
+    this.setState({ loading: false, status: statusData });
   }
   render() {
     if (this.state.loading) {
@@ -44,7 +55,8 @@ class AdminEventList extends Component {
               description={this.state.events[key].description}
               identifier={this.state.events[key].identifier}
               status={this.state.events[key].status}
-              attended="3/7"
+              attended={this.state.status[key].attended}
+              total={this.state.status[key].total}
             />
           ))}
         </tbody>
