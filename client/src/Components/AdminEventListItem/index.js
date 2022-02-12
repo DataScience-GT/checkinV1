@@ -8,6 +8,7 @@ const AdminEventListItem = (props) => {
 
   return (
     <tr className="admin-event-list-item">
+      <td className="edit">edit</td>
       <td className="name">{props.name}</td>
       <td className="desc">{props.description ? props.description : "N/A"}</td>
       <td className="status">{props.status ? "enabled" : "disabled"}</td>
