@@ -400,6 +400,56 @@ app.post("/api/:key/event/update", async (req, res) => {
   });
 });
 
+/**
+ * @param body user to create
+ */
+ app.post("/api/:key/user/create", async (req, res) => {
+  //check for prerequisites
+  let key = req.params.key;
+  try {
+    let result = await checkAPIkey(key, "user.create");
+  } catch (err) {
+    res.status(400).json({ error: err });
+    return;
+  }
+
+  //get body data
+  var errors = [];
+
+  if (!req.body.user) {
+    errors.push("must include a new user");
+  } else {
+    if (!req.body.user.name) {
+      errors.push("New users must have a name");
+    }
+    if (!req.body.user.email) {
+      errors.push("New users must have an email");
+    } else if (!req.body.user.email.includes("@")) {
+      errors.push("User email not in valid format");
+    }
+  }
+  if (errors.length) {
+    res.status(400).json({ error: errors.join(", ") });
+    return;
+  }
+  let barcode = generateApiKey({length: 11, pool: '0123456789'});
+  
+  //insert into users table
+  let sql = `INSERT INTO users (name, email, barcodeNum) VALUES ('${req.body.user.name}', '${req.body.user.email}', '${barcode}');`;
+  db.run(sql, (err) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+    });
+  });
+
+  
+  //res.json({data: barcode});
+});
+
 /* ---------- TEMPLATE -------------'
 app.get("/api/:key/", async (req, res) => {
   //check for prerequisites
