@@ -120,6 +120,10 @@ class Checkin extends Component {
     }
     return (
       <div className="checkin">
+        <p className="note">
+          Note: website must be running on https for camera to work. (change url
+          if not working)
+        </p>
         <select id="checkin-event">
           {this.state.events.map((event) => (
             <option key={event.identifier} value={event.identifier}>
@@ -129,7 +133,6 @@ class Checkin extends Component {
         </select>
         {this.state.useCam ? (
           <div className="qr">
-            <p className="note">Note: website must be running on https for camera to work. (change url if not working)</p>
             <QrReader
               facingMode="rear"
               delay={this.state.delay}
