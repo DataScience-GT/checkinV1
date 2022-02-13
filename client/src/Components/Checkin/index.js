@@ -32,14 +32,14 @@ class Checkin extends Component {
     this.setState({ events: json.data });
 
     const res2 = await fetch(
-        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_MOD_API_KEY}/user/list`
-      );
-      const json2 = await res2.json();
-      if (json2.error) {
-        console.error(json2.error);
-      }
-      //console.log(json2.data)
-      this.setState({ loading: false, users: json2.data });
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_MOD_API_KEY}/user/list`
+    );
+    const json2 = await res2.json();
+    if (json2.error) {
+      console.error(json2.error);
+    }
+    //console.log(json2.data)
+    this.setState({ loading: false, users: json2.data });
   }
   setCamera() {
     this.setState({ useCam: true });
@@ -88,7 +88,14 @@ class Checkin extends Component {
               if (data.message && data.message == "success") {
                 //data has been updated
                 errorText.innerHTML = "";
-                successText.innerHTML = `User '${this.state.users.filter(x => x.barcodeNum == userBarcode)[0].name}' has been checked in for '${this.state.events.filter(x => x.identifier == eventIdentifier)[0].name}'`;
+                successText.innerHTML = `User '${
+                  this.state.users.filter((x) => x.barcodeNum == userBarcode)[0]
+                    .name
+                }' has been checked in for '${
+                  this.state.events.filter(
+                    (x) => x.identifier == eventIdentifier
+                  )[0].name
+                }'`;
               } else if (data.error) {
                 errorText.innerHTML = data.error;
               }
@@ -122,14 +129,25 @@ class Checkin extends Component {
         </select>
         {this.state.useCam ? (
           <div className="qr">
+            <p className="note">Note: website must be running on https for camera to work. (change url if not working)</p>
             <QrReader
+              facingMode="rear"
               delay={this.state.delay}
               style={previewStyle}
               onError={this.handleError}
               onScan={this.handleScan}
             />
             <p className="barcode">User ID: {this.state.result}</p>
-            <p className="username">User Name: {this.state.users.filter(x => x.barcodeNum == this.state.result)[0]? this.state.users.filter(x => x.barcodeNum == this.state.result)[0].name : ""}</p>
+            <p className="username">
+              User Name:{" "}
+              {this.state.users.filter(
+                (x) => x.barcodeNum == this.state.result
+              )[0]
+                ? this.state.users.filter(
+                    (x) => x.barcodeNum == this.state.result
+                  )[0].name
+                : "No Result"}
+            </p>
             <p className="error"></p>
             <p className="success"></p>
           </div>
