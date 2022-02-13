@@ -88,7 +88,7 @@ class Checkin extends Component {
               if (data.message && data.message == "success") {
                 //data has been updated
                 errorText.innerHTML = "";
-                successText.innerHTML = `${this.state.users.filter(x => x.barcodeNum == userBarcode).name} has been checked in for ${this.state.events.filter(x => x.identifier == eventIdentifier).name}`;
+                successText.innerHTML = `User '${this.state.users.filter(x => x.barcodeNum == userBarcode)[0].name}' has been checked in for '${this.state.events.filter(x => x.identifier == eventIdentifier)[0].name}'`;
               } else if (data.error) {
                 errorText.innerHTML = data.error;
               }
