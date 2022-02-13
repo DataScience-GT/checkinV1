@@ -10,6 +10,9 @@ class AdminEventListItem extends Component {
     this.state = { loading: false, showModal: false };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  editEvent = () => {
+    console.log(1)
+  }
 
   render() {
     if (this.state.loading) {
@@ -57,6 +60,7 @@ class AdminEventListItem extends Component {
                       <option value="0" selected="selected">Disabled</option>
                     </select>
                   )}
+                  <button onClick={}>submit</button>
                 </form>
               </div>
             </Modal>
