@@ -1,3 +1,43 @@
 .checkin {
+  margin: 0 auto;
+  width: 320px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  > .qr {
+    margin: 10px auto;
+    display: block;
     width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    > .error,
+    .success,
+    .barcode,
+    .username {
+      font-weight: 500;
+      width: 100%;
+      display: block;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    > .error {
+      color: red;
+    }
+    > .success {
+      color: green;
+    }
+  }
+
+  #checkin-event {
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    padding: 10px;
+  }
+  .use-camera {
+    width: 320px;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    padding: 10px;
+  }
 }

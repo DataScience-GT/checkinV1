@@ -1,4 +1,51 @@
 .checkin {
+  margin: 0 auto;
+  width: 320px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.checkin > .qr {
+  margin: 10px auto;
+  display: block;
   width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
+}
+
+.checkin > .qr > .error,
+.checkin > .qr .success,
+.checkin > .qr .barcode,
+.checkin > .qr .username {
+  font-weight: 500;
+  width: 100%;
+  display: block;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.checkin > .qr > .error {
+  color: red;
+}
+
+.checkin > .qr > .success {
+  color: green;
+}
+
+.checkin #checkin-event {
+  width: 320px;
+  margin: 0 auto;
+  margin-top: 10px;
+  display: block;
+  padding: 10px;
+}
+
+.checkin .use-camera {
+  width: 320px;
+  margin: 0 auto;
+  margin-top: 10px;
+  display: block;
+  padding: 10px;
 }
 /*# sourceMappingURL=main.css.map */

@@ -105,14 +105,14 @@ class Checkin extends Component {
 
   render() {
     const previewStyle = {
-      height: 320,
+      height: 240,
       width: 320,
     };
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
     return (
-      <div>
+      <div className="checkin">
         <select id="checkin-event">
           {this.state.events.map((event) => (
             <option key={event.identifier} value={event.identifier}>
@@ -128,7 +128,8 @@ class Checkin extends Component {
               onError={this.handleError}
               onScan={this.handleScan}
             />
-            <p>User ID: {this.state.result}</p>
+            <p className="barcode">User ID: {this.state.result}</p>
+            <p className="username">User Name: {this.state.users.filter(x => x.barcodeNum == this.state.result)[0]? this.state.users.filter(x => x.barcodeNum == this.state.result)[0].name : ""}</p>
             <p className="error"></p>
             <p className="success"></p>
           </div>
