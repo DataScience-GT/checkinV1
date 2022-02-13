@@ -10,24 +10,22 @@ class UserListItem extends Component {
     this.state = { loading: false, showModal: false };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
-  /*editEvent = () => {
+  editUser = () => {
     //console.log(this.props);
-    let form = document.getElementById("edit-event-form");
-    let formName = form.querySelector(".edit-event-name").value;
-    let formDescription = form.querySelector(".edit-event-description").value;
-    let formStatus = form.querySelector(".edit-event-status").value;
+    let form = document.getElementById("edit-user-form");
+    //let formIdentifier = form.querySelector(".edit-event-identifier").value;
+    let formName = form.querySelector(".edit-user-name").value;
+    let formEmail = form.querySelector(".edit-user-email").value;
+    //let formStatus = form.querySelector(".edit-event-status").value;
     let errorText = form.querySelector(".error");
 
     let updates = [];
     //check all forms for changes
     if (formName) {
-      updates.push(`name=${formName}`);
+      updates.push(`userName=${formName}`);
     }
-    if (formDescription) {
-      updates.push(`description=${formDescription}`);
-    }
-    if (this.props.status != formStatus) {
-      updates.push(`status=${formStatus}`);
+    if (formEmail) {
+      updates.push(`userEmail=${formEmail}`);
     }
 
     if (!updates.length) {
@@ -40,9 +38,7 @@ class UserListItem extends Component {
       fetch(
         `https://dry-ridge-34066.herokuapp.com/api/${
           process.env.REACT_APP_ADMIN_API_KEY
-        }/event/update?identifier=${this.props.identifier}&${updates.join(
-          "&"
-        )}`,
+        }/user/update?barcodeNum=${this.props.barcodeNum}&${updates.join("&")}`,
         { method: "POST" }
       )
         .then((response) => response.json())
@@ -50,10 +46,12 @@ class UserListItem extends Component {
           if (data.message && data.message == "success") {
             //data has been updated
             window.location.reload();
+          } else if (data.error) {
+            errorText.innerHTML = data.error;
           }
         });
     }
-  };*/
+  };
   createUser = () => {
     //console.log(this.props);
     let form = document.getElementById("create-user-form");
@@ -117,30 +115,21 @@ class UserListItem extends Component {
             {showModal ? (
               <Modal>
                 <div className="edit-event-modal">
-                  <div id="edit-event-form">
-                    <label>Name*</label>
+                  <div id="edit-user-form">
+                    <label>Name</label>
                     <input
                       type="text"
-                      className="edit-event-name"
+                      className="edit-user-name"
                       placeholder={props.name}
                     />
 
-                    <label>Description</label>
+                    <label>Email</label>
                     <input
                       type="text"
-                      name="description"
-                      className="edit-event-description"
-                      placeholder={props.description}
+                      className="edit-user-email"
+                      placeholder={props.email}
                     />
 
-                    <label>Status</label>
-                    <select
-                      className="edit-event-status"
-                      defaultValue={props.status ? 1 : 0}
-                    >
-                      <option value="1">Enabled</option>
-                      <option value="0">Disabled</option>
-                    </select>
                     <p className="error"></p>
                     <button
                       className="edit-event-cancel"
@@ -150,7 +139,7 @@ class UserListItem extends Component {
                     </button>
                     <button
                       className="edit-event-submit"
-                      onClick={this.editEvent}
+                      onClick={this.editUser}
                     >
                       submit
                     </button>
@@ -179,10 +168,7 @@ class UserListItem extends Component {
                     <input type="text" className="create-user-name" />
 
                     <label>Email*</label>
-                    <input
-                      type="text"
-                      className="create-user-email"
-                    />
+                    <input type="text" className="create-user-email" />
 
                     <p className="error"></p>
                     <button

@@ -4,6 +4,10 @@
   font-weight: 500;
 }
 
+.user-list-item > td:empty {
+  width: 0px;
+}
+
 .edit-event-modal {
   padding: 20px;
   padding-bottom: 25px;

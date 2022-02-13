@@ -8,4 +8,8 @@
 th {
   border: 1px solid black;
 }
+
+th:empty {
+  width: 0px;
+}
 /*# sourceMappingURL=main.css.map */

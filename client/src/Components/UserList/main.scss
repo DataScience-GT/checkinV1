@@ -8,4 +8,7 @@
 
 th {
   border: 1px solid black;
+  &:empty {
+    width: 0px;
+  }
 }
