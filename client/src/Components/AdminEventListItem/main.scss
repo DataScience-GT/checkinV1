@@ -6,8 +6,39 @@
 }
 
 .edit-event-modal {
+    padding: 20px;
+    padding-bottom: 25px;
     label {
-        
+        display: block;
+        padding: 0;
+        margin: 0;
+        color: rgb(56, 56, 56);
+    }
+    input {
+        display: block;
+        margin: 0;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    select {
+        display: block;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+    button {
+        display: block;
+        margin: 10px 0;
+        padding: 5px;
+    }
+    .edit-event-submit {
+        float: right;
+    }
+    .edit-event-cancel {
+        float: left;
+    }
+    .error {
+        color: red;
+        font-size: 0.8em;
     }
 }
 

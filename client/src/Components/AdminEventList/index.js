@@ -52,6 +52,7 @@ class AdminEventList extends Component {
             <th>Description</th>
             <th>Status</th>
             <th>Attended</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

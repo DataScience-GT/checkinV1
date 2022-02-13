@@ -11,8 +11,33 @@ class AdminEventListItem extends Component {
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
   editEvent = () => {
-    console.log(1)
-  }
+    //console.log(this.props);
+    let form = document.getElementById("edit-event-form");
+    let formName = form.querySelector(".edit-event-name").value;
+    let formDescription = form.querySelector(".edit-event-description").value;
+    let formStatus = form.querySelector(".edit-event-status").value;
+    let errorText = form.querySelector(".error");
+
+    let updates = [];
+    //check all forms for changes
+    if (formName) {
+      updates.push(`name=${formName}`);
+    }
+    if (formDescription) {
+      updates.push(`description=${formDescription}`);
+    }
+    if (this.props.status != formStatus) {
+      updates.push(`status=${formStatus}`);
+    }
+
+    if (!updates.length) {
+      //show error text
+      errorText.innerHTML = "No changes found";
+      return;
+    } else {
+      
+    }
+  };
 
   render() {
     if (this.state.loading) {
@@ -37,31 +62,44 @@ class AdminEventListItem extends Component {
           {showModal ? (
             <Modal>
               <div className="edit-event-modal">
-                <form id="edit-event-form">
-                  <label form="name">Name*</label>
-                  <input type="text" name="name" value={props.name} />
+                <div id="edit-event-form">
+                  <label>Name*</label>
+                  <input
+                    type="text"
+                    className="edit-event-name"
+                    placeholder={props.name}
+                  />
 
-                  <label form="description">Description</label>
+                  <label>Description</label>
                   <input
                     type="text"
                     name="description"
-                    value={props.description}
+                    className="edit-event-description"
+                    placeholder={props.description}
                   />
 
-                  <label form="status">Status</label>
-                  {props.status ? (
-                    <select name="status">
-                      <option value="1" selected="selected">Enabled</option>
-                      <option value="0">Disabled</option>
-                    </select>
-                  ) : (
-                    <select name="status">
-                      <option value="1">Enabled</option>
-                      <option value="0" selected="selected">Disabled</option>
-                    </select>
-                  )}
-                  <button onClick={}>submit</button>
-                </form>
+                  <label>Status</label>
+                  <select
+                    className="edit-event-status"
+                    defaultValue={props.status ? 1 : 0}
+                  >
+                    <option value="1">Enabled</option>
+                    <option value="0">Disabled</option>
+                  </select>
+                  <p className="error"></p>
+                  <button
+                    className="edit-event-cancel"
+                    onClick={this.toggleModal}
+                  >
+                    cancel
+                  </button>
+                  <button
+                    className="edit-event-submit"
+                    onClick={this.editEvent}
+                  >
+                    submit
+                  </button>
+                </div>
               </div>
             </Modal>
           ) : null}
