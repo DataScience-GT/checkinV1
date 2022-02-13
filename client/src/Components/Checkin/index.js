@@ -1,6 +1,6 @@
 import "./main.css";
 import React, { Component } from "react";
-import QrReader from "react-qr-scanner";
+import QrReader from "react-qr-reader";
 
 class Checkin extends Component {
   constructor(props) {
@@ -134,7 +134,7 @@ class Checkin extends Component {
         {this.state.useCam ? (
           <div className="qr">
             <QrReader
-              facingmode="rear"
+              
               delay={this.state.delay}
               style={previewStyle}
               onError={this.handleError}
