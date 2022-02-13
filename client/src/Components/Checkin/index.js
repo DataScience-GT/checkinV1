@@ -46,15 +46,15 @@ class Checkin extends Component {
   }
   handleScan(data) {
     if (!this.state.checking)
-      if (data && data.text) {
+      if (data && data) {
         this.setState({ checking: true });
-        //console.log(data.text);
+        //console.log(data);
         this.setState({
-          result: data.text,
+          result: data,
         });
         //checkin user
         let eventIdentifier = document.getElementById("checkin-event").value;
-        let userBarcode = +data.text;
+        let userBarcode = +data;
         let errorText = document.querySelector(".error");
         let successText = document.querySelector(".success");
 
@@ -112,7 +112,7 @@ class Checkin extends Component {
 
   render() {
     const previewStyle = {
-      height: 240,
+      height: 320,
       width: 320,
     };
     if (this.state.loading) {
@@ -134,7 +134,6 @@ class Checkin extends Component {
         {this.state.useCam ? (
           <div className="qr">
             <QrReader
-              
               delay={this.state.delay}
               style={previewStyle}
               onError={this.handleError}
