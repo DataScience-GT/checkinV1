@@ -134,7 +134,7 @@ class Checkin extends Component {
         {this.state.useCam ? (
           <div className="qr">
             <QrReader
-              facingMode="rear"
+              facingmode="rear"
               delay={this.state.delay}
               style={previewStyle}
               onError={this.handleError}
