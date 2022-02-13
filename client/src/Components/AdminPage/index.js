@@ -6,6 +6,7 @@ import PageHeader from "../PageHeader";
 import Wrapper from "../Wrapper";
 //import FitContainer from "../FitContainer";
 import AdminEventList from "../AdminEventList";
+import UserList from "../UserList";
 import TitleContainer from "../TitleContainer";
 
 class AdminPage extends Component {
@@ -36,6 +37,9 @@ class AdminPage extends Component {
         <PageHeader title="Admin" />
         <TitleContainer title="Event List">
           <AdminEventList />
+        </TitleContainer>
+        <TitleContainer title="User List">
+          <UserList />
         </TitleContainer>
       </Wrapper>
     );

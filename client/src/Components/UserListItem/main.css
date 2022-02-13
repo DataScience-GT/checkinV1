@@ -1,46 +1,51 @@
-.admin-event-list-item {
-  > td {
-    border: 1px solid #000;
-    color:#000;
-    font-weight: 500;
-  }
+.user-list-item > td {
+  border: 1px solid #000;
+  color: #000;
+  font-weight: 500;
 }
 
 .edit-event-modal {
-    padding: 20px;
-    padding-bottom: 25px;
-    label {
-        display: block;
-        padding: 0;
-        margin: 0;
-        color: rgb(56, 56, 56);
-    }
-    input {
-        display: block;
-        margin: 0;
-        padding: 5px;
-        margin-bottom: 5px;
-    }
-    select {
-        display: block;
-        padding: 5px;
-        margin-bottom: 5px;
-    }
-    button {
-        display: block;
-        margin: 10px 0;
-        padding: 5px;
-    }
-    .edit-event-submit {
-        float: right;
-    }
-    .edit-event-cancel {
-        float: left;
-    }
-    .error {
-        color: red;
-        font-size: 0.8em;
-    }
+  padding: 20px;
+  padding-bottom: 25px;
+}
+
+.edit-event-modal label {
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: #383838;
+}
+
+.edit-event-modal input {
+  display: block;
+  margin: 0;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.edit-event-modal select {
+  display: block;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.edit-event-modal button {
+  display: block;
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.edit-event-modal .edit-event-submit {
+  float: right;
+}
+
+.edit-event-modal .edit-event-cancel {
+  float: left;
+}
+
+.edit-event-modal .error {
+  color: red;
+  font-size: 0.8em;
 }
 
 /*.event-list-item {
@@ -110,3 +115,4 @@ td {
     padding: 5px;
     //border: 1px dashed blue;
 }*/
+/*# sourceMappingURL=main.css.map */

@@ -1,6 +1,7 @@
 .admin-event-list-item > td {
   border: 1px solid #000;
   color: #000;
+  font-weight: 500;
 }
 
 .edit-event-modal {

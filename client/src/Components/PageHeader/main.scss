@@ -1,22 +1,24 @@
 header {
-    height: calc(5em + 10px);
+    height: calc(4em);
     display: flex;
     position: relative;
     width: 100%;
     //border: 1px dashed red;
     //background-color: rgb(158, 157, 231);
-    box-shadow: inset 0px 0px 0px 5px rgb(104, 104, 104);
+    //box-shadow: inset 0px 0px 0px 5px rgb(104, 104, 104);
     padding: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-flow: row wrap;
+    border: 1px solid rgba($color: #000000, $alpha: 0.3);
 
-    h1 {
+    > h1 {
         display: flexbox;
         width: fit-content;
         height: 100%;
         //border: 1px dashed green;
-        padding: 0.25em 0px;
+        //padding: 0.1em 0px;
         margin: 0 auto;
         font-size: 2.5em;
+        font-weight: 600;
     }
 }

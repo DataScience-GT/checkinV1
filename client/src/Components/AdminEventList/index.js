@@ -47,7 +47,8 @@ class AdminEventList extends Component {
       <table className="admin-list">
         <thead>
           <tr>
-            <th>edit</th>
+            <th>Tools</th>
+            <th>Identifier</th>
             <th>Name</th>
             <th>Description</th>
             <th>Status</th>
@@ -56,6 +57,7 @@ class AdminEventList extends Component {
           </tr>
         </thead>
         <tbody>
+        <AdminEventListItem />
           {Object.keys(this.state.events).map((key) => (
             <AdminEventListItem
               key={key}

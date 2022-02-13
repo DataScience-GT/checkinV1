@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 import Modal from "../Modal";
 
-class AdminEventListItem extends Component {
+class UserListItem extends Component {
   constructor() {
     super();
     this.state = { loading: false, showModal: false };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
-  editEvent = () => {
+  /*editEvent = () => {
     //console.log(this.props);
     let form = document.getElementById("edit-event-form");
     let formName = form.querySelector(".edit-event-name").value;
@@ -53,29 +53,23 @@ class AdminEventListItem extends Component {
           }
         });
     }
-  };
-  createEvent = () => {
+  };*/
+  createUser = () => {
     //console.log(this.props);
-    let form = document.getElementById("edit-event-form");
-    let formIdentifier = form.querySelector(".edit-event-identifier").value;
-    let formName = form.querySelector(".edit-event-name").value;
-    let formDescription = form.querySelector(".edit-event-description").value;
-    let formStatus = form.querySelector(".edit-event-status").value;
+    let form = document.getElementById("create-user-form");
+    //let formIdentifier = form.querySelector(".edit-event-identifier").value;
+    let formName = form.querySelector(".create-user-name").value;
+    let formEmail = form.querySelector(".create-user-email").value;
+    //let formStatus = form.querySelector(".edit-event-status").value;
     let errorText = form.querySelector(".error");
 
     let params = [];
     //check all forms for changes
-    if (formIdentifier) {
-      params.push(`identifier=${formIdentifier}`);
-    }
     if (formName) {
-      params.push(`name=${formName}`);
+      params.push(`userName=${formName}`);
     }
-    if (formDescription) {
-      params.push(`description=${formDescription}`);
-    }
-    if (this.props.status != formStatus) {
-      params.push(`status=${formStatus}`);
+    if (formEmail) {
+      params.push(`userEmail=${formEmail}`);
     }
 
     if (!params.length) {
@@ -88,7 +82,7 @@ class AdminEventListItem extends Component {
       fetch(
         `https://dry-ridge-34066.herokuapp.com/api/${
           process.env.REACT_APP_ADMIN_API_KEY
-        }/event/create?${params.join("&")}`,
+        }/user/create?${params.join("&")}`,
         { method: "POST" }
       )
         .then((response) => response.json())
@@ -109,22 +103,16 @@ class AdminEventListItem extends Component {
     }
     const { showModal } = this.state;
     const props = this.props;
-    //console.log(props);
-    if (props.identifier) {
+
+    if (props.barcodeNum) {
       return (
-        <tr className="admin-event-list-item">
+        <tr className="user-list-item">
           <td className="edit">
             <button onClick={this.toggleModal}>edit</button>
           </td>
-          <td className="identifier">{props.identifier}</td>
+          <td className="barcodeNum">{props.barcodeNum}</td>
           <td className="name">{props.name}</td>
-          <td className="desc">
-            {props.description ? props.description : "N/A"}
-          </td>
-          <td className="status" style={{color: props.status ? "green" : "red"}}>{props.status ? "enabled" : "disabled"}</td>
-          <td className="attended">
-            {props.attended}/{props.total}
-          </td>
+          <td className="email">{props.email}</td>
           <td>
             {showModal ? (
               <Modal>
@@ -175,37 +163,27 @@ class AdminEventListItem extends Component {
       );
     } else {
       return (
-        <tr className="admin-event-list-item">
-          <td className="new-event">
+        <tr className="user-list-item">
+          <td className="create">
             <button onClick={this.toggleModal}>create</button>
           </td>
-          <td className="identifier">---</td>
+          <td className="barcodeNum">---</td>
           <td className="name">---</td>
-          <td className="desc">---</td>
-          <td className="status">---</td>
-          <td className="attended">---</td>
+          <td className="email">---</td>
           <td>
             {showModal ? (
               <Modal>
                 <div className="edit-event-modal">
-                  <div id="edit-event-form">
-                    <label>Identifier*</label>
-                    <input type="text" className="edit-event-identifier" />
+                  <div id="create-user-form">
                     <label>Name*</label>
-                    <input type="text" className="edit-event-name" />
+                    <input type="text" className="create-user-name" />
 
-                    <label>Description</label>
+                    <label>Email*</label>
                     <input
                       type="text"
-                      name="description"
-                      className="edit-event-description"
+                      className="create-user-email"
                     />
 
-                    <label>Status</label>
-                    <select className="edit-event-status" defaultValue="1">
-                      <option value="1">Enabled</option>
-                      <option value="0">Disabled</option>
-                    </select>
                     <p className="error"></p>
                     <button
                       className="edit-event-cancel"
@@ -215,7 +193,7 @@ class AdminEventListItem extends Component {
                     </button>
                     <button
                       className="edit-event-submit"
-                      onClick={this.createEvent}
+                      onClick={this.createUser}
                     >
                       submit
                     </button>
@@ -230,4 +208,4 @@ class AdminEventListItem extends Component {
   }
 }
 
-export default AdminEventListItem;
+export default UserListItem;

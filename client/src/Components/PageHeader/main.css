@@ -1,28 +1,27 @@
 header {
-  height: calc(5em + 10px);
+  height: calc(4em);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: relative;
   width: 100%;
-  -webkit-box-shadow: inset 0px 0px 0px 5px #686868;
-          box-shadow: inset 0px 0px 0px 5px #686868;
   padding: 5px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-header h1 {
+header > h1 {
   display: flexbox;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: 100%;
-  padding: 0.25em 0px;
   margin: 0 auto;
   font-size: 2.5em;
+  font-weight: 600;
 }
 /*# sourceMappingURL=main.css.map */
