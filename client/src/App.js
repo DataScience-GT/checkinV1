@@ -10,6 +10,7 @@ import EventPage from "./Components/EventPage";
 import PageHeader from "./Components/PageHeader";
 import ThemeContext from "./Components/ThemeContext";
 import AdminPage from "./Components/AdminPage";
+import CheckinPage from "./Components/CheckinPage";
 
 //console.log(process.env.REACT_APP_CHECKIN_API_KEY);
 
@@ -20,7 +21,10 @@ function App() {
       <div>
         <Router>
           <Switch>
-          <Route path="/admin">
+          <Route path="/checkin">
+              <CheckinPage />
+            </Route>
+            <Route path="/admin">
               <AdminPage />
             </Route>
             <Route path="/event/:identifier">
