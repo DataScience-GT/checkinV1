@@ -35,7 +35,23 @@ class AdminEventListItem extends Component {
       errorText.innerHTML = "No changes found";
       return;
     } else {
-      
+      //make api request with event updates
+
+      fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${
+          process.env.REACT_APP_ADMIN_API_KEY
+        }/event/update?identifier=${this.props.identifier}&${updates.join(
+          "&"
+        )}`,
+        { method: "POST" }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message && data.message == "success") {
+            //data has been updated
+            window.location.reload();
+          }
+        });
     }
   };
 
