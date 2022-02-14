@@ -8,6 +8,10 @@
   width: 0px;
 }
 
+.user-list-item > td > button {
+  padding: 5px;
+}
+
 .edit-event-modal {
   padding: 20px;
   padding-bottom: 25px;
@@ -48,6 +52,50 @@
 }
 
 .edit-event-modal .error {
+  color: red;
+  font-size: 0.8em;
+}
+
+.create-user-bulk {
+  padding: 20px;
+  padding-bottom: 25px;
+}
+
+.create-user-bulk label {
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: #383838;
+}
+
+.create-user-bulk input {
+  display: block;
+  margin: 0;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.create-user-bulk select {
+  display: block;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.create-user-bulk button {
+  display: block;
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.create-user-bulk .edit-event-submit {
+  float: right;
+}
+
+.create-user-bulk .edit-event-cancel {
+  float: left;
+}
+
+.create-user-bulk .error {
   color: red;
   font-size: 0.8em;
 }

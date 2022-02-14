@@ -4,6 +4,10 @@
   font-weight: 500;
 }
 
+.admin-event-list-item > td > button {
+  padding: 5px;
+}
+
 .edit-event-modal {
   padding: 20px;
   padding-bottom: 25px;

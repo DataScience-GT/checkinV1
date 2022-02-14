@@ -6,7 +6,7 @@ import UserListItem from "../UserListItem";
 class UserList extends Component {
   constructor() {
     super();
-    this.state = { loading: true, users: []};
+    this.state = { loading: true, users: [] };
   }
   async componentDidMount() {
     //process.env.REACT_APP_CHECKIN_API_KEY
@@ -39,7 +39,9 @@ class UserList extends Component {
           </tr>
         </thead>
         <tbody>
-        <UserListItem />
+          <UserListItem
+            barcodeNums={this.state.users.map((x) => x.barcodeNum)}
+          />
           {Object.keys(this.state.users).map((key) => (
             <UserListItem
               key={key}

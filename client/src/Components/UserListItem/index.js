@@ -1,15 +1,16 @@
 import "./main.css";
 import { Component } from "react";
-import { Link } from "react-router-dom";
 
 import Modal from "../Modal";
 
 class UserListItem extends Component {
   constructor() {
     super();
-    this.state = { loading: false, showModal: false };
+    this.state = { loading: false, showModal: false, showBulkModal: false };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  toggleBulkModal = () =>
+    this.setState({ showBulkModal: !this.state.showBulkModal });
   editUser = () => {
     //console.log(this.props);
     let form = document.getElementById("edit-user-form");
@@ -95,31 +96,134 @@ class UserListItem extends Component {
     }
   };
 
+  createBulkUser = () => {
+    //console.log(this.props);
+    let form = document.getElementById("create-user-bulk-form");
+    //let formIdentifier = form.querySelector(".edit-event-identifier").value;
+    let file = form.querySelector(".create-user-file").files[0];
+    let errorText = form.querySelector(".error");
+
+    if (!file) {
+      errorText.innerHTML = "No file selected";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const text = e.target.result;
+      text.split("\r\n").map((row) => {
+        if (row) {
+          if (row.split(",").length > 2) {
+            errorText.innerHTML = "CSV has too many columns";
+            return;
+          }
+          let name = row.split(",")[0];
+          let email = row.split(",")[1];
+          let params = `userName=${name}&userEmail=${email}`;
+
+          fetch(
+            `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/create?${params}`,
+            { method: "POST" }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message && data.message == "success") {
+                //data has been updated
+              } else if (data.error) {
+                errorText.innerHTML = data.error;
+              }
+            });
+        }
+      });
+      window.location.reload();
+    };
+
+    reader.readAsText(file);
+    /*let formEmail = form.querySelector(".create-user-email").value;
+    //let formStatus = form.querySelector(".edit-event-status").value;
+    
+
+    let params = [];
+    //check all forms for changes
+    if (formName) {
+      params.push(`userName=${formName}`);
+    }
+    if (formEmail) {
+      params.push(`userEmail=${formEmail}`);
+    }
+
+    if (!params.length) {
+      //show error text
+      errorText.innerHTML = "No fields inputed";
+      return;
+    } else {
+      //make api request with event updates
+
+      fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${
+          process.env.REACT_APP_ADMIN_API_KEY
+        }/user/create?${params.join("&")}`,
+        { method: "POST" }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message && data.message == "success") {
+            //data has been updated
+            window.location.reload();
+          } else if (data.error) {
+            errorText.innerHTML = data.error;
+          }
+        });
+    }*/
+  };
+
   sendEmail = () => {
     //console.log(this.props);
 
     fetch(
-      `https://dry-ridge-34066.herokuapp.com/api/${
-        process.env.REACT_APP_ADMIN_API_KEY
-      }/user/email?barcodeNum=${this.props.barcodeNum}`
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/email?barcodeNum=${this.props.barcodeNum}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.message && data.message == "success") {
           //data has been updated
           //show message
-          console.log("sent")
+          console.log("sent");
         } else if (data.error) {
           console.error(data.error);
         }
       });
   };
 
+  sendEmailAll = () => {
+    //console.log(this.props);
+    if (!this.props.barcodeNums) {
+      console.error("missing barcode nums");
+      return;
+    }
+    for (let i = 0; i < this.props.barcodeNums.length; i++) {
+      const num = this.props.barcodeNums[i];
+      fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/email?barcodeNum=${num}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message && data.message == "success") {
+            //data has been updated
+            //show message
+            console.log(`sent email to ${num}`);
+          } else if (data.error) {
+            console.error(data.error);
+          }
+        });
+    }
+    console.log("finished sending emails");
+  };
+
   render() {
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
-    const { showModal } = this.state;
+    const { showModal, showBulkModal } = this.state;
     const props = this.props;
 
     if (props.barcodeNum) {
@@ -172,10 +276,13 @@ class UserListItem extends Component {
         </tr>
       );
     } else {
+      //console.log(props.barcodeNums);
       return (
         <tr className="user-list-item">
           <td className="create">
             <button onClick={this.toggleModal}>create</button>
+            <button onClick={this.toggleBulkModal}>create bulk</button>
+            <button onClick={this.sendEmailAll}>email all</button>
           </td>
           <td className="barcodeNum">---</td>
           <td className="name">---</td>
@@ -201,6 +308,30 @@ class UserListItem extends Component {
                     <button
                       className="edit-event-submit"
                       onClick={this.createUser}
+                    >
+                      submit
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
+            {showBulkModal ? (
+              <Modal>
+                <div className="create-user-bulk">
+                  <div id="create-user-bulk-form">
+                    <label>CSV File* (name,email format)</label>
+                    <input type="file" className="create-user-file" />
+
+                    <p className="error"></p>
+                    <button
+                      className="edit-event-cancel"
+                      onClick={this.toggleBulkModal}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="edit-event-submit"
+                      onClick={this.createBulkUser}
                     >
                       submit
                     </button>

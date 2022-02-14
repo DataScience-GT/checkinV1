@@ -1,5 +1,6 @@
 import { React, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router";
 import "./App.css";
 
 //load pages
@@ -34,11 +35,11 @@ function App() {
             <Route path="/admin">
               <AdminPage />
             </Route>
-            <Route path="/event/:identifier">
+            {/*<Route path="/event/:identifier">
               <EventPage />
-            </Route>
+            </Route>*/}
             <Route path="/">
-              <LandingPage />
+              <Redirect to="/login" />
             </Route>
           </Switch>
         </Router>
