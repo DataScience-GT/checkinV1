@@ -7,6 +7,9 @@ const port = 5000;
 
 //load other things
 const generateApiKey = require("generate-api-key");
+const nodemailer = require("nodemailer");
+const qr = require("qrcode");
+const fs = require('fs');
 
 //load the database
 const db = require("./db/database.js");
@@ -793,6 +796,108 @@ app.post("/api/:key/user/update", async (req, res) => {
     res.json({
       message: "success",
     });
+  });
+});
+
+/**
+ * @param user barcode num
+ */
+app.get("/api/:key/user/email", async (req, res) => {
+  //check for prerequisites
+  let key = req.params.key;
+  try {
+    let result = await checkAPIkey(key, "user.email");
+  } catch (err) {
+    res.status(400).json({ error: err });
+    return;
+  }
+
+  if (!req.query.barcodeNum) {
+    res.status(400).json({ error: "Query must include barcodeNum property" });
+    return;
+  }
+
+  //get user email
+  let sql = `SELECT COUNT(*) as count, email FROM users WHERE barcodeNum = '${req.query.barcodeNum}';`;
+  db.all(sql, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    if (!rows[0].count) {
+      //barcodenum incorrect
+      res.status(400).json({ error: "User not found with given barcodeNum" });
+      return;
+    }
+    //send email with barcode
+
+    //generate qr code
+    //let qrcode = "";
+    qr.toDataURL(req.query.barcodeNum, function (err, url) {
+      if (err) {
+        res.status(400).json({ error: err });
+        return;
+      }
+      //console.log(url)
+      let transporter = nodemailer.createTransport({
+        host: "smtp.ionos.com",
+        port: 587,
+        auth: {
+          user: "hello@hacklytics2022.com",
+          pass: "w2*jU?]@v?pRJ]n",
+        },
+        dkim: {
+          domainName: "hacklytics2022.com",
+          keySelector: "key1",
+          privateKey: fs.readFileSync("./certificates/dkim/dkim.pem", "utf8"),
+          cacheDir: "/tmp",
+          cacheTreshold: 100 * 1024,
+        },
+      });
+      //console.log(url)
+      message = {
+        from: "hello@hacklytics2022.com",
+        to: rows[0].email,
+        subject: "qr code",
+        html: `<html><body style="background-color: white;"><h1>Here is your QR code to check in.</h1><img width="200" height="200" src="cid:qrcode@send" /></body></html>`,
+        attachments: [
+          {
+            // encoded string as an attachment
+            filename: "image.png",
+            path: url,
+            cid: "qrcode@send",
+          },
+        ],
+      };
+      transporter.sendMail(message, function (err, info) {
+        if (err) {
+          res.status(400).json({ error: err });
+          return;
+        } else {
+          res.json({ message: "success" });
+        }
+      });
+    });
+    /*qr.toCanvas(
+      "test123",
+      { errorCorrectionLevel: "H" },
+      function (err, canvas) {
+        if (err.length) {
+          res.status(400).json({ error: err });
+          return;
+        }
+        console.log(canvas);
+        qrCanvas = canvas;
+      }
+    );*/
+    /*qr.toString("I am a pony!", { type: "terminal" }, function (err, url) {
+      if (err) {
+        res.status(400).json({ error: "Error generating QR code" });
+        return;
+      }
+      qrURL = url;
+    });
+    console.log(qrURL)*/
   });
 });
 
