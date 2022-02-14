@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import { ReactDOM } from "react-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 
@@ -12,7 +11,6 @@ import LoginPage from "./Components/LoginPage";
 import RegisterPage from "./Components/RegisterPage";
 
 //load components
-import PageHeader from "./Components/PageHeader";
 import ThemeContext from "./Components/ThemeContext";
 
 //console.log(process.env.REACT_APP_CHECKIN_API_KEY);
