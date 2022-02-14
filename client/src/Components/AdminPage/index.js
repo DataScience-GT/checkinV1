@@ -9,6 +9,8 @@ import AdminEventList from "../AdminEventList";
 import UserList from "../UserList";
 import TitleContainer from "../TitleContainer";
 
+import CheckLogin from "../CheckLogin";
+
 class AdminPage extends Component {
   /*constructor() {
     super();
@@ -34,6 +36,7 @@ class AdminPage extends Component {
 
     return (
       <Wrapper>
+        <CheckLogin allowedTypes="master,admin"/>
         <PageHeader title="Admin" />
         <TitleContainer title="Event List">
           <AdminEventList />

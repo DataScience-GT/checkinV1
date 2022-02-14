@@ -1,5 +1,6 @@
 import "./main.css";
 import { Component } from "react";
+import { Redirect } from "react-router";
 
 //import components
 import PageHeader from "../PageHeader";
@@ -7,10 +8,12 @@ import Wrapper from "../Wrapper";
 //import FitContainer from "../FitContainer";
 
 class LoginPage extends Component {
-  /*constructor() {
+  constructor() {
     super();
-    this.state = { loading: true };
-  }*/
+    this.state = { loginLocation: "" };
+
+    this.submitLogin = this.submitLogin.bind(this);
+  }
   /*async componentDidMount() {
     //process.env.REACT_APP_CHECKIN_API_KEY
     const res = await fetch(
@@ -42,9 +45,19 @@ class LoginPage extends Component {
       errorText.innerHTML = json.error;
     } else {
       //set sessionstorage, navigate to checkin/admin page
-      sessionStorage.setItem('sessionToken', json.token);
-      if(json.type == "master" || json.type == "admin") {
+      sessionStorage.setItem("sessionToken", json.token);
+      if (json.type == "master" || json.type == "admin") {
         //navigate to admin
+        //console.log("admin");
+        this.setState({ loginLocation: "/admin" });
+      } else if (json.type == "mod") {
+        //navigate to checkin
+        //console.log("checkin");
+        this.setState({ loginLocation: "/checkin" });
+      } else if (json.type == "default") {
+        //idk
+        //console.log("default");
+        this.setState({ loginLocation: "/" });
       }
     }
   }
@@ -55,22 +68,25 @@ class LoginPage extends Component {
       return <h2>loading events...</h2>;
     }*/
     }
-
-    return (
-      <Wrapper>
-        <PageHeader title="Login" />
-        <div id="login">
-          <label>Username*</label>
-          <input className="login-username" type="text" />
-          <label>Password*</label>
-          <input className="login-password" type="password" />
-          <p className="error"></p>
-          <button className="login-submit" onClick={this.submitLogin}>
-            Submit
-          </button>
-        </div>
-      </Wrapper>
-    );
+    if (!this.state.loginLocation) {
+      return (
+        <Wrapper>
+          <PageHeader title="Login" />
+          <div id="login">
+            <label>Username*</label>
+            <input className="login-username" type="text" />
+            <label>Password*</label>
+            <input className="login-password" type="password" />
+            <p className="error"></p>
+            <button className="login-submit" onClick={this.submitLogin}>
+              Submit
+            </button>
+          </div>
+        </Wrapper>
+      );
+    } else {
+      return <Redirect to={this.state.loginLocation} />;
+    }
   }
 }
 
