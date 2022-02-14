@@ -138,42 +138,6 @@ class UserListItem extends Component {
     };
 
     reader.readAsText(file);
-    /*let formEmail = form.querySelector(".create-user-email").value;
-    //let formStatus = form.querySelector(".edit-event-status").value;
-    
-
-    let params = [];
-    //check all forms for changes
-    if (formName) {
-      params.push(`userName=${formName}`);
-    }
-    if (formEmail) {
-      params.push(`userEmail=${formEmail}`);
-    }
-
-    if (!params.length) {
-      //show error text
-      errorText.innerHTML = "No fields inputed";
-      return;
-    } else {
-      //make api request with event updates
-
-      fetch(
-        `https://dry-ridge-34066.herokuapp.com/api/${
-          process.env.REACT_APP_ADMIN_API_KEY
-        }/user/create?${params.join("&")}`,
-        { method: "POST" }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.message && data.message == "success") {
-            //data has been updated
-            window.location.reload();
-          } else if (data.error) {
-            errorText.innerHTML = data.error;
-          }
-        });
-    }*/
   };
 
   sendEmail = () => {
