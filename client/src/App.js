@@ -6,11 +6,12 @@ import "./App.css";
 //load pages
 import LandingPage from "./Components/LandingPage";
 import EventPage from "./Components/EventPage";
+import AdminPage from "./Components/AdminPage";
+import CheckinPage from "./Components/CheckinPage";
+import LoginPage from "./Components/LoginPage";
 //load components
 import PageHeader from "./Components/PageHeader";
 import ThemeContext from "./Components/ThemeContext";
-import AdminPage from "./Components/AdminPage";
-import CheckinPage from "./Components/CheckinPage";
 
 //console.log(process.env.REACT_APP_CHECKIN_API_KEY);
 
@@ -21,7 +22,10 @@ function App() {
       <div>
         <Router>
           <Switch>
-          <Route path="/checkin">
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/checkin">
               <CheckinPage />
             </Route>
             <Route path="/admin">
