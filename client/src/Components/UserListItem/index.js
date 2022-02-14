@@ -119,19 +119,22 @@ class UserListItem extends Component {
           let name = row.split(",")[0];
           let email = row.split(",")[1];
           let params = `userName=${name}&userEmail=${email}`;
-
-          fetch(
-            `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/create?${params}`,
-            { method: "POST" }
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.message && data.message == "success") {
-                //data has been updated
-              } else if (data.error) {
-                errorText.innerHTML = data.error;
-              }
-            });
+          try {
+            fetch(
+              `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/create?${params}`,
+              { method: "POST" }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.message && data.message == "success") {
+                  //data has been updated
+                } else if (data.error) {
+                  errorText.innerHTML = data.error;
+                }
+              });
+          } catch (err) {
+            console.err(err);
+          }
         }
       });
       window.location.reload();
