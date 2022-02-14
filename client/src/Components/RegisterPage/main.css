@@ -1,0 +1,33 @@
+div#login {
+  width: 300px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+div#login > label {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+div#login > input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+div#login .error {
+  color: red;
+}
+
+div#login .login-submit {
+  margin-top: 10px;
+  padding: 5px;
+  float: right;
+  display: block;
+}
+/*# sourceMappingURL=main.css.map */

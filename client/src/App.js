@@ -9,6 +9,8 @@ import EventPage from "./Components/EventPage";
 import AdminPage from "./Components/AdminPage";
 import CheckinPage from "./Components/CheckinPage";
 import LoginPage from "./Components/LoginPage";
+import RegisterPage from "./Components/RegisterPage";
+
 //load components
 import PageHeader from "./Components/PageHeader";
 import ThemeContext from "./Components/ThemeContext";
@@ -22,6 +24,9 @@ function App() {
       <div>
         <Router>
           <Switch>
+            <Route path="/register/:token">
+              <RegisterPage />
+            </Route>
             <Route path="/login">
               <LoginPage />
             </Route>
