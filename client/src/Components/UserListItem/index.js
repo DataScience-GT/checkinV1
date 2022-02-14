@@ -95,6 +95,26 @@ class UserListItem extends Component {
     }
   };
 
+  sendEmail = () => {
+    //console.log(this.props);
+
+    fetch(
+      `https://dry-ridge-34066.herokuapp.com/api/${
+        process.env.REACT_APP_ADMIN_API_KEY
+      }/user/email?barcodeNum=${this.props.barcodeNum}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message && data.message == "success") {
+          //data has been updated
+          //show message
+          console.log("sent")
+        } else if (data.error) {
+          console.error(data.error);
+        }
+      });
+  };
+
   render() {
     if (this.state.loading) {
       return <h2>loading...</h2>;
@@ -107,6 +127,7 @@ class UserListItem extends Component {
         <tr className="user-list-item">
           <td className="edit">
             <button onClick={this.toggleModal}>edit</button>
+            <button onClick={this.sendEmail}>email</button>
           </td>
           <td className="barcodeNum">{props.barcodeNum}</td>
           <td className="name">{props.name}</td>
