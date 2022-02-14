@@ -7,6 +7,8 @@ import Wrapper from "../Wrapper";
 import Checkin from "../Checkin";
 //import FitContainer from "../FitContainer";
 
+import CheckLogin from "../CheckLogin";
+
 class CheckinPage extends Component {
   /*constructor() {
     super();
@@ -32,6 +34,7 @@ class CheckinPage extends Component {
 
     return (
       <Wrapper>
+        <CheckLogin allowedTypes="master,admin,mod" />
         <PageHeader title="Check In" />
         <Checkin />
       </Wrapper>
