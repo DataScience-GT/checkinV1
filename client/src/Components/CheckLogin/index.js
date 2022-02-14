@@ -18,8 +18,9 @@ class CheckLogin extends Component {
     //process.env.REACT_APP_CHECKIN_API_KEY
     //get session token
     let token = sessionStorage.getItem("sessionToken");
+    //console.log(token);
     if (!token) {
-      this.setState({ redirect: true });
+      this.setState({ loading: false, redirect: true });
       return;
     }
     const res = await fetch(
@@ -27,7 +28,7 @@ class CheckLogin extends Component {
     );
     const json = await res.json();
     if (json.error) {
-      this.setState({ redirect: true });
+      this.setState({ loading: false, redirect: true });
       return;
     }
     //console.log(json)
@@ -38,8 +39,8 @@ class CheckLogin extends Component {
   }
 
   render() {
-    if(this.state.loading) {
-      return (<div></div>)
+    if (this.state.loading) {
+      return <div></div>;
     }
     if (this.state.redirect) {
       return <Redirect to="/login" />;
