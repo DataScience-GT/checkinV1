@@ -54,26 +54,35 @@ class RegisterPage extends Component {
     }
 
     const res = await fetch(
-      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_MOD_API_KEY}/account/create?type=${this.state.type}&username=${username}&password=${password}`
-    , {method: 'POST'});
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_MOD_API_KEY}/account/create?type=${this.state.type}&username=${username}&password=${password}`,
+      { method: "POST" }
+    );
     const json = await res.json();
     if (json.error) {
       errorText.innerHTML = json.error;
     } else {
-      //set sessionstorage, navigate to checkin/admin page
-      sessionStorage.setItem("sessionToken", json.token);
-      if (json.type == "master" || json.type == "admin") {
-        //navigate to admin
-        //console.log("admin");
-        this.setState({ loginLocation: "/admin" });
-      } else if (json.type == "mod") {
-        //navigate to checkin
-        //console.log("checkin");
-        this.setState({ loginLocation: "/checkin" });
-      } else if (json.type == "default") {
-        //idk
-        //console.log("default");
-        this.setState({ loginLocation: "/" });
+      const res2 = await fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_DEFAULT_API_KEY}/account/login?username=${username}&password=${password}`
+      );
+      const json2 = await res2.json();
+      if (json2.error) {
+        errorText.innerHTML = json2.error;
+      } else {
+        //set sessionstorage, navigate to checkin/admin page
+        sessionStorage.setItem("sessionToken", json2.token);
+        if (json2.type == "master" || json2.type == "admin") {
+          //navigate to admin
+          //console.log("admin");
+          this.setState({ loginLocation: "/admin" });
+        } else if (json2.type == "mod") {
+          //navigate to checkin
+          //console.log("checkin");
+          this.setState({ loginLocation: "/checkin" });
+        } else if (json2.type == "default") {
+          //idk
+          //console.log("default");
+          this.setState({ loginLocation: "/" });
+        }
       }
     }
   }
