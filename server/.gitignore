@@ -1,3 +1,6 @@
 .env
 /certificates/
+
 /db/
+db/database.db
+*.db
