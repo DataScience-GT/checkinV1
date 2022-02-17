@@ -45,7 +45,7 @@ class CheckLogin extends Component {
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     } else {
-      return <div> </div>;
+      return <div></div>;
     }
   }
 }

@@ -1,6 +1,5 @@
 import "./main.css";
 import { Component } from "react";
-import { Link } from "react-router-dom";
 
 import Modal from "../Modal";
 

@@ -6,7 +6,6 @@ import PageHeader from "../PageHeader";
 import Wrapper from "../Wrapper";
 import FitContainer from "../FitContainer";
 import EventList from "../EventList";
-import EventListItem from "../EventListItem";
 
 
 

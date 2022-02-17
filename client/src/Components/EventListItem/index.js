@@ -4,7 +4,7 @@ import ThemeContext from "../ThemeContext";
 import { Link } from "react-router-dom";
 
 const EventListItem = (props) => {
-  const [theme, setTheme] = useContext(ThemeContext);
+  const [theme] = useContext(ThemeContext);
 
   return (
     <div className="event-list-item" style={{ borderColor: theme }}>

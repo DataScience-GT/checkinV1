@@ -3,7 +3,7 @@ import { useContext } from "react";
 import ThemeContext from "../ThemeContext";
 
 const PageHeader = ({ title }) => {
-  const [theme, setTheme] = useContext(ThemeContext);
+  const [theme] = useContext(ThemeContext);
   return (
     <header style={{backgroundColor: theme}}>
       <h1>{title}</h1>

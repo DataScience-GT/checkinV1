@@ -91,7 +91,7 @@ class RegisterPage extends Component {
     if (this.state.loading) {
       return <h2>loading events...</h2>;
     }
-    const token = this.state.token;
+    //const token = this.state.token;
     if (!this.state.loginLocation) {
       return (
         <Wrapper>

@@ -120,7 +120,9 @@ class UserListItem extends Component {
     const reader = new FileReader();
     reader.onload = function (e) {
       const text = e.target.result;
-      text.split("\r\n").map((row) => {
+      var iterations = text.split("\r\n").length - 1;
+      var iter = 0;
+      text.split("\r\n").map(async (row) => {
         if (row) {
           if (row.split(",").length > 2) {
             errorText.innerHTML = "CSV has too many columns";
@@ -130,7 +132,7 @@ class UserListItem extends Component {
           let email = row.split(",")[1];
           let params = `userName=${name}&userEmail=${email}`;
           try {
-            fetch(
+            await fetch(
               `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/create?${params}`,
               { method: "POST" }
             )
@@ -138,6 +140,7 @@ class UserListItem extends Component {
               .then((data) => {
                 if (data.message && data.message == "success") {
                   //data has been updated
+                  console.log("added user " + name);
                 } else if (data.error) {
                   errorText.innerHTML = data.error;
                 }
@@ -145,9 +148,13 @@ class UserListItem extends Component {
           } catch (err) {
             console.err(err);
           }
+          iter++;
+          if (iter == iterations) {
+            window.location.reload();
+          }
         }
       });
-      window.location.reload();
+      //window.location.reload();
     };
 
     reader.readAsText(file);
@@ -177,9 +184,12 @@ class UserListItem extends Component {
       console.error("missing barcode nums");
       return;
     }
-    for (let i = 0; i < this.props.barcodeNums.length; i++) {
-      const num = this.props.barcodeNums[i];
-      fetch(
+
+    var iterations = this.props.barcodeNums.length;
+    var iter = 0;
+    this.props.barcodeNums.forEach(async function (num, i) {
+      //const num = this.props.barcodeNums[i];
+      await fetch(
         `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/remove?barcodeNum=${num}`,
         { method: "POST" }
       )
@@ -189,12 +199,17 @@ class UserListItem extends Component {
             //data has been updated
             //window.location.reload();
             console.log(`removed user ${num}`);
+            iter++;
+            if(iter == iterations) {
+              window.location.reload();
+            }
           } else if (data.error) {
             console.error(data.error);
           }
         });
-    }
-    window.location.reload();
+    });
+    
+    //window.location.reload();
   };
 
   sendEmail = () => {
@@ -244,7 +259,8 @@ class UserListItem extends Component {
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
-    const { showModal, showBulkModal, showRemoveModal, showRemoveAllModal } = this.state;
+    const { showModal, showBulkModal, showRemoveModal, showRemoveAllModal } =
+      this.state;
     const props = this.props;
 
     if (props.barcodeNum) {
@@ -390,9 +406,7 @@ class UserListItem extends Component {
               <Modal>
                 <div className="remove-user-form">
                   <div id="remove-user-form">
-                    <p>
-                      Are you sure you would like to remove all users?
-                    </p>
+                    <p>Are you sure you would like to remove all users?</p>
                     <button
                       className="remove-user-cancel"
                       onClick={this.toggleRemoveAllModal}

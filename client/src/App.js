@@ -4,8 +4,6 @@ import { Redirect } from "react-router";
 import "./App.css";
 
 //load pages
-import LandingPage from "./Components/LandingPage";
-import EventPage from "./Components/EventPage";
 import AdminPage from "./Components/AdminPage";
 import CheckinPage from "./Components/CheckinPage";
 import LoginPage from "./Components/LoginPage";
