@@ -44,8 +44,8 @@ class LoginPage extends Component {
     if (json.error) {
       errorText.innerHTML = json.error;
     } else {
-      //set sessionstorage, navigate to checkin/admin page
-      sessionStorage.setItem("sessionToken", json.token);
+      //set localStorage, navigate to checkin/admin page
+      localStorage.setItem("sessionToken", json.token);
       if (json.type == "master" || json.type == "admin") {
         //navigate to admin
         //console.log("admin");

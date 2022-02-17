@@ -17,7 +17,7 @@ class CheckLogin extends Component {
     let allowedTypes = this.props.allowedTypes;
     //process.env.REACT_APP_CHECKIN_API_KEY
     //get session token
-    let token = sessionStorage.getItem("sessionToken");
+    let token = localStorage.getItem("sessionToken");
     //console.log(token);
     if (!token) {
       this.setState({ loading: false, redirect: true });

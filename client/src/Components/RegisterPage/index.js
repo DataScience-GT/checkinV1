@@ -68,8 +68,8 @@ class RegisterPage extends Component {
       if (json2.error) {
         errorText.innerHTML = json2.error;
       } else {
-        //set sessionstorage, navigate to checkin/admin page
-        sessionStorage.setItem("sessionToken", json2.token);
+        //set localStorage, navigate to checkin/admin page
+        localStorage.setItem("sessionToken", json2.token);
         if (json2.type == "master" || json2.type == "admin") {
           //navigate to admin
           //console.log("admin");
