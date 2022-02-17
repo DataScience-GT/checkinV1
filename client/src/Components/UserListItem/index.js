@@ -12,6 +12,7 @@ class UserListItem extends Component {
       showBulkModal: false,
       showRemoveModal: false,
       showRemoveAllModal: false,
+      iter: 0,
     };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
@@ -200,7 +201,7 @@ class UserListItem extends Component {
             //window.location.reload();
             console.log(`removed user ${num}`);
             iter++;
-            if(iter == iterations) {
+            if (iter == iterations) {
               window.location.reload();
             }
           } else if (data.error) {
@@ -208,7 +209,7 @@ class UserListItem extends Component {
           }
         });
     });
-    
+
     //window.location.reload();
   };
 
@@ -236,8 +237,13 @@ class UserListItem extends Component {
       console.error("missing barcode nums");
       return;
     }
-    for (let i = 0; i < this.props.barcodeNums.length; i++) {
-      const num = this.props.barcodeNums[i];
+    this.setState({ iter: 0 });
+    this.iterSendEmail();
+  };
+
+  iterSendEmail() {
+    setTimeout(() => {
+      const num = this.props.barcodeNums[this.state.iter];
       fetch(
         `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/email?barcodeNum=${num}`
       )
@@ -247,13 +253,24 @@ class UserListItem extends Component {
             //data has been updated
             //show message
             console.log(`sent email to ${num}`);
+            this.setState({ iter: this.state.iter + 1 });
+            if (this.state.iter < this.props.barcodeNums.length) {
+              this.iterSendEmail();
+            } else {
+              console.log("finished sending emails");
+            }
           } else if (data.error) {
             console.error(data.error);
+            this.setState({ iter: this.state.iter + 1 });
+            if (this.state.iter < this.props.barcodeNums.length) {
+              this.iterSendEmail();
+            } else {
+              console.log("finished sending emails");
+            }
           }
         });
-    }
-    console.log("finished sending emails");
-  };
+    }, 500);
+  }
 
   render() {
     if (this.state.loading) {
