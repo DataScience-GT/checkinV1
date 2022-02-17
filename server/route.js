@@ -579,7 +579,7 @@ router.post("/:key/user/create", async (req, res) => {
     errors.push("User email not in valid format");
   }
   if (req.query.barcodeNum) {
-    if (!Number.isInteger(req.query.barcodeNum)) {
+    if (!Number.isInteger(+req.query.barcodeNum)) {
       errors.push("User barcodeNum must be an integer");
     }
   }
@@ -615,9 +615,9 @@ router.post("/:key/user/remove", async (req, res) => {
   //check for prerequisites
   let key = req.params.key;
   try {
-    let result = await checkAPIkey(key, "user.remove");
+    let result = await checkAPIkey(key, "user.create");
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
     return;
   }
 
@@ -634,7 +634,7 @@ router.post("/:key/user/remove", async (req, res) => {
   }
 
   try {
-    const user = await Database.removeUser(req.query.barcodeNum);
+    console.log(await Database.removeUser(req.query.barcodeNum));
     res.json({
       message: "success",
     });
