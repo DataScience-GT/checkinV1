@@ -6,11 +6,21 @@ import Modal from "../Modal";
 class UserListItem extends Component {
   constructor() {
     super();
-    this.state = { loading: false, showModal: false, showBulkModal: false };
+    this.state = {
+      loading: false,
+      showModal: false,
+      showBulkModal: false,
+      showRemoveModal: false,
+      showRemoveAllModal: false,
+    };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
   toggleBulkModal = () =>
     this.setState({ showBulkModal: !this.state.showBulkModal });
+  toggleRemoveModal = () =>
+    this.setState({ showRemoveModal: !this.state.showRemoveModal });
+  toggleRemoveAllModal = () =>
+    this.setState({ showRemoveAllModal: !this.state.showRemoveAllModal });
   editUser = () => {
     //console.log(this.props);
     let form = document.getElementById("edit-user-form");
@@ -143,6 +153,50 @@ class UserListItem extends Component {
     reader.readAsText(file);
   };
 
+  removeUser = () => {
+    //make api request to remove user
+
+    fetch(
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/remove?barcodeNum=${this.props.barcodeNum}`,
+      { method: "POST" }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message && data.message == "success") {
+          //data has been updated
+          window.location.reload();
+        } else if (data.error) {
+          console.error(data.error);
+        }
+      });
+  };
+
+  removeAllUsers = () => {
+    //make api request to remove user
+    if (!this.props.barcodeNums) {
+      console.error("missing barcode nums");
+      return;
+    }
+    for (let i = 0; i < this.props.barcodeNums.length; i++) {
+      const num = this.props.barcodeNums[i];
+      fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/remove?barcodeNum=${num}`,
+        { method: "POST" }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message && data.message == "success") {
+            //data has been updated
+            //window.location.reload();
+            console.log(`removed user ${num}`);
+          } else if (data.error) {
+            console.error(data.error);
+          }
+        });
+    }
+    window.location.reload();
+  };
+
   sendEmail = () => {
     //console.log(this.props);
 
@@ -190,7 +244,7 @@ class UserListItem extends Component {
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
-    const { showModal, showBulkModal } = this.state;
+    const { showModal, showBulkModal, showRemoveModal, showRemoveAllModal } = this.state;
     const props = this.props;
 
     if (props.barcodeNum) {
@@ -199,6 +253,7 @@ class UserListItem extends Component {
           <td className="edit">
             <button onClick={this.toggleModal}>edit</button>
             <button onClick={this.sendEmail}>email</button>
+            <button onClick={this.toggleRemoveModal}>remove</button>
           </td>
           <td className="barcodeNum">{props.barcodeNum}</td>
           <td className="name">{props.name}</td>
@@ -239,6 +294,30 @@ class UserListItem extends Component {
                 </div>
               </Modal>
             ) : null}
+            {showRemoveModal ? (
+              <Modal>
+                <div className="remove-user-form">
+                  <div id="remove-user-form">
+                    <p>
+                      Are you sure you would like to remove user '{props.name}',
+                      '{props.email}'?
+                    </p>
+                    <button
+                      className="remove-user-cancel"
+                      onClick={this.toggleRemoveModal}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="remove-user-submit"
+                      onClick={this.removeUser}
+                    >
+                      continue
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
           </td>
         </tr>
       );
@@ -250,6 +329,7 @@ class UserListItem extends Component {
             <button onClick={this.toggleModal}>create</button>
             <button onClick={this.toggleBulkModal}>create bulk</button>
             <button onClick={this.sendEmailAll}>email all</button>
+            <button onClick={this.toggleRemoveAllModal}>remove all</button>
           </td>
           <td className="barcodeNum">---</td>
           <td className="name">---</td>
@@ -301,6 +381,29 @@ class UserListItem extends Component {
                       onClick={this.createBulkUser}
                     >
                       submit
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
+            {showRemoveAllModal ? (
+              <Modal>
+                <div className="remove-user-form">
+                  <div id="remove-user-form">
+                    <p>
+                      Are you sure you would like to remove all users?
+                    </p>
+                    <button
+                      className="remove-user-cancel"
+                      onClick={this.toggleRemoveAllModal}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="remove-user-submit"
+                      onClick={this.removeAllUsers}
+                    >
+                      continue
                     </button>
                   </div>
                 </div>

@@ -57,7 +57,9 @@ class AdminEventList extends Component {
           </tr>
         </thead>
         <tbody>
-        <AdminEventListItem />
+          <AdminEventListItem
+            identifiers={this.state.events.map((x) => x.identifier)}
+          />
           {Object.keys(this.state.events).map((key) => (
             <AdminEventListItem
               key={key}

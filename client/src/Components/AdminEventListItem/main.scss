@@ -46,6 +46,29 @@
   }
 }
 
+.remove-event-form {
+  padding: 20px;
+  padding-bottom: 25px;
+  p {
+    display: block;
+    padding: 0;
+    margin: 0;
+    color: rgb(56, 56, 56);
+    width: 250px;
+  }
+  button {
+    display: block;
+    margin: 10px 0;
+    padding: 5px;
+  }
+  .remove-event-submit {
+    float: right;
+  }
+  .remove-event-cancel {
+    float: left;
+  }
+}
+
 /*.event-list-item {
     width: 300px;
     height: fit-content;

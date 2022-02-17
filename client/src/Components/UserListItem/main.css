@@ -100,6 +100,33 @@
   font-size: 0.8em;
 }
 
+.remove-user-form {
+  padding: 20px;
+  padding-bottom: 25px;
+}
+
+.remove-user-form p {
+  display: block;
+  padding: 0;
+  margin: 0;
+  color: #383838;
+  width: 250px;
+}
+
+.remove-user-form button {
+  display: block;
+  margin: 10px 0;
+  padding: 5px;
+}
+
+.remove-user-form .remove-user-submit {
+  float: right;
+}
+
+.remove-user-form .remove-user-cancel {
+  float: left;
+}
+
 /*.event-list-item {
     width: 300px;
     height: fit-content;

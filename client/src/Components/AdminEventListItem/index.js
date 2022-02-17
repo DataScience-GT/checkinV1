@@ -7,9 +7,18 @@ import Modal from "../Modal";
 class AdminEventListItem extends Component {
   constructor() {
     super();
-    this.state = { loading: false, showModal: false };
+    this.state = {
+      loading: false,
+      showModal: false,
+      showRemoveModal: false,
+      showRemoveAllModal: false,
+    };
   }
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  toggleRemoveModal = () =>
+    this.setState({ showRemoveModal: !this.state.showRemoveModal });
+  toggleRemoveAllModal = () =>
+    this.setState({ showRemoveAllModal: !this.state.showRemoveAllModal });
   editEvent = () => {
     //console.log(this.props);
     let form = document.getElementById("edit-event-form");
@@ -103,11 +112,55 @@ class AdminEventListItem extends Component {
     }
   };
 
+  removeEvent = () => {
+    //make api request to remove event
+
+    fetch(
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/remove?identifier=${this.props.identifier}`,
+      { method: "POST" }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message && data.message == "success") {
+          //data has been updated
+          window.location.reload();
+        } else if (data.error) {
+          console.error(data.error);
+        }
+      });
+  };
+
+  removeAllEvents = () => {
+    //make api request to remove user
+    if (!this.props.identifiers) {
+      console.error("missing events identifiers");
+      return;
+    }
+    for (let i = 0; i < this.props.identifiers.length; i++) {
+      const ident = this.props.identifiers[i];
+      fetch(
+        `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/event/remove?identifier=${ident}`,
+        { method: "POST" }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message && data.message == "success") {
+            //data has been updated
+            //window.location.reload();
+            console.log(`removed event ${ident}`);
+          } else if (data.error) {
+            console.error(data.error);
+          }
+        });
+    }
+    window.location.reload();
+  };
+
   render() {
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
-    const { showModal } = this.state;
+    const { showModal, showRemoveModal, showRemoveAllModal } = this.state;
     const props = this.props;
     //console.log(props);
     if (props.identifier) {
@@ -115,13 +168,19 @@ class AdminEventListItem extends Component {
         <tr className="admin-event-list-item">
           <td className="edit">
             <button onClick={this.toggleModal}>edit</button>
+            <button onClick={this.toggleRemoveModal}>remove</button>
           </td>
           <td className="identifier">{props.identifier}</td>
           <td className="name">{props.name}</td>
           <td className="desc">
             {props.description ? props.description : "N/A"}
           </td>
-          <td className="status" style={{color: props.status ? "green" : "red"}}>{props.status ? "enabled" : "disabled"}</td>
+          <td
+            className="status"
+            style={{ color: props.status ? "green" : "red" }}
+          >
+            {props.status ? "enabled" : "disabled"}
+          </td>
           <td className="attended">
             {props.attended}/{props.total}
           </td>
@@ -170,6 +229,30 @@ class AdminEventListItem extends Component {
                 </div>
               </Modal>
             ) : null}
+            {showRemoveModal ? (
+              <Modal>
+                <div className="remove-event-form">
+                  <div id="remove-event-form">
+                    <p>
+                      Are you sure you would like to remove event '{props.name}
+                      '?
+                    </p>
+                    <button
+                      className="remove-event-cancel"
+                      onClick={this.toggleRemoveModal}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="remove-event-submit"
+                      onClick={this.removeEvent}
+                    >
+                      continue
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
           </td>
         </tr>
       );
@@ -178,6 +261,7 @@ class AdminEventListItem extends Component {
         <tr className="admin-event-list-item">
           <td className="new-event">
             <button onClick={this.toggleModal}>create</button>
+            <button onClick={this.toggleRemoveAllModal}>remove all</button>
           </td>
           <td className="identifier">---</td>
           <td className="name">---</td>
@@ -218,6 +302,29 @@ class AdminEventListItem extends Component {
                       onClick={this.createEvent}
                     >
                       submit
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
+            {showRemoveAllModal ? (
+              <Modal>
+                <div className="remove-event-form">
+                  <div id="remove-event-form">
+                    <p>
+                      Are you sure you would like to remove all events?
+                    </p>
+                    <button
+                      className="remove-event-cancel"
+                      onClick={this.toggleRemoveAllModal}
+                    >
+                      cancel
+                    </button>
+                    <button
+                      className="remove-event-submit"
+                      onClick={this.removeAllEvents}
+                    >
+                      continue
                     </button>
                   </div>
                 </div>
