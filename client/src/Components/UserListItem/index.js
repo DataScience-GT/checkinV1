@@ -12,6 +12,8 @@ class UserListItem extends Component {
       showBulkModal: false,
       showRemoveModal: false,
       showRemoveAllModal: false,
+      showQRModal: false,
+      QRCode: "",
       iter: 0,
     };
   }
@@ -22,6 +24,31 @@ class UserListItem extends Component {
     this.setState({ showRemoveModal: !this.state.showRemoveModal });
   toggleRemoveAllModal = () =>
     this.setState({ showRemoveAllModal: !this.state.showRemoveAllModal });
+  toggleShowQRModal = () =>
+    this.setState({ showQRModal: !this.state.showQRModal });
+  componentDidMount() {
+    if (this.props.barcodeNum) {
+      this.loadQRCode();
+    }
+  }
+  loadQRCode = () => {
+    //let qrform = document.getElementById("qr-form");
+    //let qrimg = qrform.querySelector("img.qr");
+
+    fetch(
+      `https://dry-ridge-34066.herokuapp.com/api/${process.env.REACT_APP_ADMIN_API_KEY}/user/qr?barcodeNum=${this.props.barcodeNum}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message && data.message == "success") {
+          //got qr code
+          this.setState({ QRCode: data.data });
+        } else if (data.error) {
+          console.error(data.error);
+        }
+      });
+  };
+
   editUser = () => {
     //console.log(this.props);
     let form = document.getElementById("edit-user-form");
@@ -276,8 +303,13 @@ class UserListItem extends Component {
     if (this.state.loading) {
       return <h2>loading...</h2>;
     }
-    const { showModal, showBulkModal, showRemoveModal, showRemoveAllModal } =
-      this.state;
+    const {
+      showModal,
+      showBulkModal,
+      showRemoveModal,
+      showRemoveAllModal,
+      showQRModal,
+    } = this.state;
     const props = this.props;
 
     if (props.barcodeNum) {
@@ -287,6 +319,7 @@ class UserListItem extends Component {
             <button onClick={this.toggleModal}>edit</button>
             <button onClick={this.sendEmail}>email</button>
             <button onClick={this.toggleRemoveModal}>remove</button>
+            <button onClick={this.toggleShowQRModal}>qr code</button>
           </td>
           <td className="barcodeNum">{props.barcodeNum}</td>
           <td className="name">{props.name}</td>
@@ -346,6 +379,21 @@ class UserListItem extends Component {
                       onClick={this.removeUser}
                     >
                       continue
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            ) : null}
+            {showQRModal ? (
+              <Modal>
+                <div className="qr-form">
+                  <div id="qr-form">
+                    <img className="qr" src ={this.state.QRCode} alt={props.barcodeNum} />
+                    <button
+                      className="show-qr-cancel"
+                      onClick={this.toggleShowQRModal}
+                    >
+                      close
                     </button>
                   </div>
                 </div>

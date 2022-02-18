@@ -109,6 +109,20 @@
   }
 }
 
+.qr-form {
+  padding: 20px;
+  .qr {
+    display: block;
+    height: 300px;
+    width: 300px;
+  }
+  .show-qr-cancel {
+    display: block;
+    margin: 10px auto;
+    margin-bottom: 0;
+    padding: 5px;
+  }
+}
 /*.event-list-item {
     width: 300px;
     height: fit-content;
